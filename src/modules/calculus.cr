@@ -1,6 +1,6 @@
 module CrystalScientificLibrary
 
-    def self.integral(of f : Float64 -> Float64, between a : Float64, and b : Float64, with_n_steps n : Float64, using method : String = "trapezoid")
+    def self.integral(of f : Float64 -> Float64, between a : Float64, and b : Float64, with_n_steps n : Int32, using method : String = "trapezoid")
         result = 0
 
         case method
@@ -13,10 +13,25 @@ module CrystalScientificLibrary
             end
 
             result *= h
+        when "simpson"
+            n = n + 1 if n.odd?
+            h = (b - a) / n
 
+            result += f.call(a) + f.call(b)
+            (1...n).each do |k|
+                if k.odd?
+                    result += 4 * f.call(a + k * h)
+                else
+                    result += 2 * f.call(a + k * h)
+                end
+            end
+
+            result *= (1/3) * h
         else
             raise "Invalid name for an integration method!"
         end
+
+        return result
     end
 
     def self.integral(of f : Float64 -> Float64, between a : Float64, and b : Float64, 
