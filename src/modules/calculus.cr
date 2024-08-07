@@ -59,4 +59,25 @@ module CrystalScientificLibrary
 
         return result
     end
+
+    def self.accumulation_function(of f : Float64 -> Float64, 
+                                   from a : Float64, to b : Float64, 
+                                   in_n_steps n_steps : Int32, with_n_slices n_slices : Int32, 
+                                   using method : String = "trapezoid")
+        result = [] of Float64
+        delta_x = (b - a) / n_steps
+
+        (0...n_steps).each do |k|
+            if result.empty?
+                result << integral of: f, between: (a + k * delta_x), and: (a + (k + 1) * delta_x), with_n_steps: n_slices, using: method
+            else
+                result << result[-1] + integral of: f, between: (a + k * delta_x), and: (a + (k + 1) * delta_x), with_n_steps: n_slices, using: method
+            end
+        end
+
+        puts result
+        return result
+    end
+
+        
 end

@@ -21,4 +21,10 @@ describe CrystalScientificLibrary do
     CrystalScientificLibrary.integral(of: [0.0, 1.0, 0.0, 1.0, 0.0], as_function_of: [0.0, 1.0, 2.0, 3.0, 4.0], using: "trapezoid").should eq 2
   end
 
+  g = ->(x : Float64) { 3.0 }
+  it "computes the accumulation function of a simple function" do
+    (CrystalScientificLibrary.accumulation_function of: g, from: 0.0, to: 3.0, in_n_steps: 10, with_n_slices: 5, using: "trapezoid")
+  end
+
+
 end
