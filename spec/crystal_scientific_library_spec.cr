@@ -16,4 +16,8 @@ describe CrystalScientificLibrary do
     CrystalScientificLibrary.integral(of: f, between: 0, and: 2, with_n_steps: 100, using: "trapezoid").should be_close(4.4, 0.01)
   end
 
+  it "Perform a simple integral from data in a list" do
+    CrystalScientificLibrary.integral(of: [0.0, 1.0, 0.0, 1.0, 0.0], as_function_of: [0.0, 1.0, 2.0, 3.0, 4.0], using: "trapezoid").should eq 2
+  end
+
 end
